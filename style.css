@@ -1,0 +1,91 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    background-color: #8697c4;
+}
+.header{
+    font-size: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.game{
+    height: 70%;
+    background-color: #ADBBDA;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container{
+    height: 60vmin;
+    width: 60vmin;
+    padding-top: 30px ;
+    padding-bottom: 30px ;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 3.5%;
+    background-color: #ADBBDA;
+    border-radius: 15px;
+}
+.box{
+    width: 18vmin;
+    height: 18vmin;
+    font-size: xx-large;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0px 0px 4px black;
+    background-color: rgb(160, 166, 212);
+    color: rgb(165, 23, 23);
+}
+.reset{
+    font-size: large;
+    padding: 7px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    border: none;
+    background-color: #8697c4;
+}
+.reset-btn{
+    font-size: large;
+    padding: 7px;
+    border-radius: 10px;
+    border: none;
+    background-color: #aeb9d1;
+    box-shadow: 0px 0px 5px rgb(66, 65, 65);
+}
+.game-name{
+    font-size: larger;
+    margin-bottom: 10px;
+}
+
+.winner-message{
+    color: blue;
+}
+
+.new-game{
+    font-size: large;
+    padding: 7px;
+    align-self: center;
+    max-width: 110px;
+    border-radius: 10px;
+    border: none;
+    background-color: #aeb9d1;
+    box-shadow: 0px 0px 5px rgb(66, 65, 65);
+}
+
+.draw-message{
+    color: rgb(213, 11, 11);
+}
+
+.hide{
+    display: none;
+}
