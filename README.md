@@ -1,57 +1,180 @@
 # Tic-Tac-Toe-Web-
-Tic Tac Toe Game
-This is a simple implementation of the classic Tic Tac Toe game using JavaScript and HTML/CSS. The game includes the following features:
+# Tic-Tac-Toe Game README
 
-HTML Structure: Contains a grid of boxes representing the Tic Tac Toe board, buttons for resetting the game and starting a new game, and elements for displaying the winner or a draw message.
+## Description
 
-CSS Styling: Basic styling to provide a visually appealing game interface.
+This project is a simple Tic-Tac-Toe game implemented in JavaScript. Two players take turns clicking on the boxes to place their markers ("X" or "O"). The game checks for a winner after each turn and announces the result. The game can be reset at any time, and a new game can be started after a win or a draw.
 
-JavaScript Logic: Manages game mechanics such as turns between players (X and O), checking for win conditions, declaring a winner, handling draws, and resetting the game.
+## Features
 
-How to Play
-Clone or Download the repository to your local machine.
+- Two-player game with alternating turns.
+- Displays the winner or announces a draw.
+- Provides buttons to reset the game or start a new game.
+- Disables boxes once they are clicked.
 
-Open the index.html file in a web browser.
+## Files
 
-Game Rules:
+- `index.html`: Contains the structure of the web page.
+- `styles.css`: Contains the styling for the web page.
+- `script.js`: Contains the JavaScript code to handle the game logic and update the UI.
 
-Click on any box in the grid to place an "X" or "O" depending on whose turn it is.
-The game alternates turns between "X" and "O".
-The game automatically detects if there is a winner based on three-in-a-row matches (horizontal, vertical, or diagonal) or if the game is a draw (all boxes are filled without a winner).
-Winning:
+## Getting Started
 
-If a player completes a line (either horizontally, vertically, or diagonally) with their symbol ("X" or "O"), that player wins.
-The winner is displayed in the "Winner Message" area.
-Draw:
+### Prerequisites
 
-If all boxes are filled and there is no winner, the game declares a draw.
-The draw message is displayed, and players have the option to start a new game.
-Buttons:
+To run this project, you'll need:
 
-Reset Button: Resets the game board and allows players to start a new game without resetting the score.
-New Game Button: Resets the entire game, including scores and the game board.
-Code Explanation
-Variables:
+- A modern web browser
 
-boxes: Holds references to each box element in the game grid.
-resetBtn, newGame: References to the reset button and new game button respectively.
-winnerName, drawMessage: Elements where winner messages and draw messages are displayed.
-turn: Tracks whose turn it is ("X" or "O").
-count: Tracks the number of moves made in the game.
-winnerDeclared: Flags whether a winner has been declared.
-Event Listeners:
+### Installation
 
-Each box in the grid has an event listener that triggers when clicked, allowing players to place their symbol ("X" or "O").
-Event listeners for the reset button and new game button reset the game board or entire game state accordingly.
-Functions:
+1. Clone the repository to your local machine.
+2. Open the `index.html` file in your web browser.
 
-winner(): Checks for win conditions based on predefined winning patterns (winPattern array).
-winnerMessage(winner): Displays the winner's name and disables further game moves.
-disableBtn(): Disables all boxes after a winner is declared or the game ends in a draw.
-resetGame(): Resets the game state, including clearing box contents, resetting turn tracking, and hiding messages.
-drawGame(): Displays the draw message and enables starting a new game.
-Further Customization
-You can modify the CSS to change the appearance of the game.
-Add more features such as keeping track of scores across multiple games, implementing a timer, or adding animations.
-Enhance the game logic to include more complex win conditions or additional player options.
-Enjoy playing Tic Tac Toe!
+### Usage
+
+1. Open the web page in your browser.
+2. Players take turns clicking on the boxes to place their markers ("X" or "O").
+3. The game will check for a winner after each turn.
+4. The result will be displayed, and the game can be reset or a new game started using the provided buttons.
+
+### JavaScript Code Explanation
+
+#### Elements Selection
+
+The script selects various elements from the DOM for manipulation.
+
+```javascript
+let boxes = document.querySelectorAll(".box");
+let resetBtn = document.querySelector(".reset-btn");
+let winnerName = document.querySelector(".winner-message");
+let newGame = document.querySelector(".new-game");
+let drawMessage = document.querySelector(".draw-message");
+
+let turn = true;
+let count = 0;
+let winnerDeclared = false;
+```
+
+#### Box Click Event
+
+The script handles the event when a box is clicked by a player.
+
+```javascript
+boxes.forEach((box) => {
+    box.addEventListener("click", () => {
+        if (turn) { // player X's turn
+            box.innerText = "X";
+            turn = false;
+            count += 1;
+        } else { // player O's turn
+            box.innerText = "O";
+            turn = true;
+            count += 1;
+        }
+        box.disabled = true;
+        winner();
+        if (count === 9 && !winnerDeclared) {
+            drawGame();
+        }
+    });
+});
+```
+
+#### Win Patterns
+
+The script defines the patterns that constitute a win.
+
+```javascript
+const winPattern = [
+    [0, 1, 2],
+    [0, 3, 6],
+    [0, 4, 8],
+    [1, 4, 7],
+    [2, 5, 8],
+    [2, 4, 6],
+    [3, 4, 5],
+    [6, 7, 8],
+];
+```
+
+#### Winner Message
+
+The script displays the winner message and disables the boxes when a player wins.
+
+```javascript
+const winnerMessage = (winner) => {
+    disableBtn();
+    winnerName.innerText = "Winner is " + winner;
+    winnerName.classList.remove("hide");
+    newGame.classList.remove("hide");
+};
+
+const disableBtn = () => {
+    for (const box of boxes) {
+        box.disabled = true;
+    }
+};
+```
+
+#### Reset Game
+
+The script handles the game reset functionality.
+
+```javascript
+const resetGame = () => {
+    for (const box of boxes) {
+        box.disabled = false;
+        turn = true;
+        box.innerText = "";
+        winnerDeclared = false;
+        count = 0;
+    }
+    winnerName.classList.add("hide");
+    newGame.classList.add("hide");
+    drawMessage.classList.add("hide");
+};
+```
+
+#### Draw Game
+
+The script handles the scenario when the game ends in a draw.
+
+```javascript
+const drawGame = () => {
+    drawMessage.classList.remove("hide");
+    newGame.classList.remove("hide");
+};
+```
+
+#### Check for Winner
+
+The script checks for a winner after each turn.
+
+```javascript
+let winner = () => {
+    for (let pattern of winPattern) {
+        let val1 = boxes[pattern[0]].innerText;
+        let val2 = boxes[pattern[1]].innerText;
+        let val3 = boxes[pattern[2]].innerText;
+
+        if (val1 != "" && val2 != "" && val3 != "") {
+            if (val1 === val2 && val2 === val3) {
+                winnerMessage(val1);
+                winnerDeclared = true;
+                return;
+            }
+        }
+    }
+};
+```
+
+#### Event Listeners for Reset and New Game
+
+The script adds event listeners to the reset and new game buttons.
+
+```javascript
+newGame.addEventListener("click", () => { resetGame(); });
+resetBtn.addEventListener("click", () => { resetGame(); });
+```
+
